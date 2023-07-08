@@ -5,7 +5,7 @@ const app = express();
 const server = http.createServer(app);
 const socketIO = require('socket.io')(server, {
     cors: {
-      origin: '*',
+      origin: 'http://localhost:8100',
     }
   });
 socketIO.on('connection', (socket) => {
