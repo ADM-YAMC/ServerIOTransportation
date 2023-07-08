@@ -1,37 +1,27 @@
 
 const express = require('express');
-const http = require('https');
 const app = express();
-const server = http.createServer(app);
-const socketIO = require('socket.io')(server, {
+const server = require('http').createServer((req, res) => res.end());
+const io = require('socket.io')(server, {
+    perMessageDeflate :false,
     cors: {
-        origin: true,
-        credentials: true,
-      },
-      allowEIO3: true,
-  });
-socketIO.on('connection', (socket) => {
-  console.log('Un cliente se ha conectado. '+socket.id);
-  socket.on('message', (message) => {
-    console.log('Mensaje recibido: ' + message);
-
-    socketIO.emit('message', message);
-    console.log('Mensaje recibido: ' + message);
-  });
-
-  // Manejar evento de desconexión
-  socket.on('disconnect', () => {
-    console.log('Un cliente se ha desconectado.');
-  });
+        origin: '*',
+        methods: ['GET', 'POST'],
+    },
 });
 
-// Ruta inicial
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+
+    socket.on('message', (msg) => {
+        io.emit('message', msg);
+        console.log('message: ' + msg);
+    });
 });
 
-// Iniciar el servidor
-const port = 3000;
-server.listen(port, () => {
-  console.log(`Servidor Socket.IO escuchando el puerto ${port}`);
+server.listen(process.env.PORT || 3000, () => {
+    console.log('listening on *:3000');
 });
