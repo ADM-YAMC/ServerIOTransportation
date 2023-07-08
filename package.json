@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "test": "echo \"No test specified\""
+=======
+     "test": "echo \"No test specified\""
+>>>>>>> 0a482a79230b1206cadcf8cc6dd575482fcdb76d
   },
   "author": "yunior",
   "license": "ISC",
