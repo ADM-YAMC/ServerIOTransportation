@@ -1,12 +1,14 @@
 
 const express = require('express');
-const http = require('http');
+const http = require('https');
 const app = express();
 const server = http.createServer(app);
 const socketIO = require('socket.io')(server, {
     cors: {
-      origin: 'http://localhost:8100',
-    }
+        origin: true,
+        credentials: true,
+      },
+      allowEIO3: true,
   });
 socketIO.on('connection', (socket) => {
   console.log('Un cliente se ha conectado. '+socket.id);
