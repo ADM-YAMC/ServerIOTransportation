@@ -16,10 +16,11 @@ io.on('connection', (socket) => {
         console.log('user disconnected');
     });
 
-    socket.on('message', (msg) => {
-        io.emit('message', msg);
-        console.log('message: ' + msg);
-    });
+    socket.on('message', (data) => {
+      const coordsWithId = { id: socket.id, ...data };
+      userCoordinates[socket.id] = coordsWithId;
+      io.emit('message', coordsWithId);
+   });
 });
 
 server.listen(process.env.PORT || 3000, () => {
