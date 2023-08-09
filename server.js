@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
 
     socket.on('message', (data) => {
       const coordsWithId = { id: socket.id, ...data };
-      userCoordinates[socket.id] = coordsWithId;
+      //userCoordinates[socket.id] = coordsWithId;
       io.emit('message', coordsWithId);
    });
 });
