@@ -13,11 +13,13 @@ const io = require('socket.io')(server, {
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('disconnect', () => {
+         const coordsWithId = { id: socket.id, status: 'disconnect'};
+         io.emit('message', coordsWithId);
         console.log('user disconnected');
     });
 
     socket.on('message', (data) => {
-      const coordsWithId = { id: socket.id, ...data };
+      const coordsWithId = { id: socket.id, ...data , status: 'connect'};
       //userCoordinates[socket.id] = coordsWithId;
       io.emit('message', coordsWithId);
    });
